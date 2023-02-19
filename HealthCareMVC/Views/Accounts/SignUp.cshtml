@@ -1,0 +1,99 @@
+﻿@model RolesSignUpViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+
+<h1 class="text-right col-11">Create an Account</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 offset-1">
+            <div class="row">
+               
+                <div class="col-md-5 align-content-xl-end border border-dark shadow-lg rounded pl-5 pr-5 pb-3 offset-2">
+                    <form asp-controller="Accounts" asp-action="SignUp" method="post" class="form-group">
+
+
+                        <div class="row form-group d-flex">
+                            <div class=" col form-floating mb-4">
+                                <input type="text" asp-for="@Model.SignUpRoles.UserName" class="form-control bg-gradient" placeholder="Enter the UserName" />
+                                <label asp-for="@Model.SignUpRoles.UserName" class="form-label " style="width:70%"></label>
+                                <span asp-validation-for="@Model.SignUpRoles.UserName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col form-floating mb-4">
+                                <input type="text" asp-for="@Model.SignUpRoles.FullName" class="form-control" placeholder="Enter your Full Name" />
+                                <label asp-for="@Model.SignUpRoles.FullName" class="form-label"></label>
+                                <span asp-validation-for="@Model.SignUpRoles.FullName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row form-group d-flex">
+                            <div class="col form-floating mb-4">
+                                <input type="text" asp-for="@Model.SignUpRoles.Email" class="form-control" placeholder="Enter your Email" />
+
+                                <label asp-for="@Model.SignUpRoles.Email" class="form-label"></label>
+                                <span asp-validation-for="@Model.SignUpRoles.Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="col form-floating mb-4">
+                                <input type="text" asp-for="@Model.SignUpRoles.PhoneNumber" class="form-control" placeholder="Enter your  Phone Number" />
+
+                                <label asp-for="@Model.SignUpRoles.PhoneNumber" class="form-label"></label>
+                                <span asp-validation-for="@Model.SignUpRoles.PhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row form-group d-flex">
+                            <div class="col form-floating mb-4">
+                                <input type="text" asp-for="@Model.SignUpRoles.Password" class="form-control" placeholder="Enter your PassWord" />
+
+                                <label asp-for="@Model.SignUpRoles.Password" class="form-label"></label>
+                                <span asp-validation-for="@Model.SignUpRoles.Password" class="text-danger"></span>
+                            </div>
+
+                            <div class="col form-floating mb-4">
+                                <input type="text" asp-for="@Model.SignUpRoles.ConfirmPassword" class="form-control" placeholder="Enter your  Confirm PassWord" />
+
+                                <label asp-for="@Model.SignUpRoles.ConfirmPassword" class="form-label"></label>
+                                <span asp-validation-for="@Model.SignUpRoles.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-control mb-4">
+                            <label asp-for="SelectedValue" class="form-group">Select Role</label>
+                            <select name="selectedValue" asp-for="SelectedValue" asp-items="Model.Values" class="form-select"></select>
+
+                        </div>
+
+
+                        <button type="submit"  class="btn btn-outline-primary btn-block mb-4 text-center" style="width: 100%;">
+                            Register
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

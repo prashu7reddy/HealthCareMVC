@@ -1,0 +1,51 @@
+﻿
+
+@model PatientViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="col offset-4 pt-5 ">
+    <h1>Add details of Customer</h1>
+    <form asp-controller="Patient" asp-action="Edit" method="post">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="mb-2 ">
+                    <label asp-for="PatientName" class="form-label"></label>
+                    <input type="text" asp-for="PatientName" class="form-control" />
+                    <span asp-validation-for="PatientName"></span>
+                </div>
+                <div class="mb-2">
+                    <label asp-for="Age" class="form-label"></label>
+                    <input type="text" asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age"></span>
+                </div>
+                <div class="mb-2">
+                    <label asp-for="PhoneNumber" class="form-label"></label>
+                    <input type="text" asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber"></span>
+                </div>
+                <div class="mb-2">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input type="text" asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email"></span>
+                </div>
+                <div class="mb-2">
+                    <label asp-for="Address" class="form-label"></label>
+                    <input type="text" asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address"></span>
+                </div>
+
+
+                <div class="mt-2 d-grid">
+                    <input type="submit" class="btn btn-primary" value="Add New" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}

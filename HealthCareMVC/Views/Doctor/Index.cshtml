@@ -1,0 +1,33 @@
+﻿@model IEnumerable<DoctorViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="class=row">
+    <div class="class=col-md-5">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Doctor Name</th>
+                    <th>Specialization Name</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td> @item.DoctorName</td>
+                        <td> @item.Specialization</td>
+                        <td class="btn btn-dark">
+                            <a asp-controller="Doctor" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
