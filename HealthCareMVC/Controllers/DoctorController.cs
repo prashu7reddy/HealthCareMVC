@@ -18,15 +18,18 @@ namespace HealthCareMVC.Controllers
         {
             _configuration = configuration;
         }
-        //private readonly string ApiUrl = "https://localhost:44350/api/";
-
+      
+        public IActionResult Doctor_Home()
+        {
+            return View();
+        }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             List<DoctorViewModel> doctors = new();
             using (var client = new HttpClient())
             {
-                //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
 
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
                 var result = await client.GetAsync("Doctors/GetAllDoctors");
@@ -43,7 +46,7 @@ namespace HealthCareMVC.Controllers
             DoctorViewModel doctor = null;
             using (var client = new HttpClient())
             {
-                //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
 
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
                 var result = await client.GetAsync($"Doctors/GetDoctorById/{id}");
@@ -72,7 +75,7 @@ namespace HealthCareMVC.Controllers
             {
                 using (var client = new HttpClient())
                 {
-                    //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
 
                     var result = await client.PostAsJsonAsync("Doctors/CreateDoctor", doctor);
@@ -98,7 +101,7 @@ namespace HealthCareMVC.Controllers
                 DoctorViewModel doctor = null;
                 using (var client = new HttpClient())
                 {
-                    //  client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
                     var result = await client.GetAsync($"doctors/GetDoctorById/{id}");
                     if (result.IsSuccessStatusCode)
@@ -165,7 +168,7 @@ namespace HealthCareMVC.Controllers
             return View(doctor);
         }
 
-        [HttpPost("Doctors/Delete/{DoctorId}")]
+        [HttpPost]
         public async Task<IActionResult> Delete(DoctorViewModel doctor)
         {
 

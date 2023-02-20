@@ -152,8 +152,8 @@ namespace HealthCareMVC.Controllers
             }
             return View(appointment);
         }
-        //[HttpPost]
-        [HttpPost("AppointmentBooking/Delete/{AppointmentBookingId}")]
+       [HttpPost]
+       // [HttpPost("AppointmentBooking/Delete/{AppointmentBookingId}")]
         public async Task<IActionResult> Delete(AppointmentBookingViewModel appointment)
         {
 

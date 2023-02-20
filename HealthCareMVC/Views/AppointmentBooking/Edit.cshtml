@@ -1,17 +1,11 @@
 ﻿
-
-
-
 @model AppointmentBookingViewModel
 @{
     ViewData["Title"] = "Edit";
 }
-
-
 <body>
     <div class="container offset-4 pt-5">
         <h1>Edit Appointment</h1>
-
         <form asp-controller="AppointmentBooking" asp-action="Edit" method="post">
             <div class="row">
                 <div class="col-md-4">
@@ -26,7 +20,6 @@
                         <input type="text" asp-for="DocSpecializationId" class="form-control" />
                         <span asp-validation-for="DocSpecializationId"></span>
                     </div>
-
                     <div class="mt-2" d-grid>
                         <input type="submit" class="btn btn-primary" value="Update Customer" />
                     </div>

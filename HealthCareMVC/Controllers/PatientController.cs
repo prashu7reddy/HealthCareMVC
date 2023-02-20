@@ -17,6 +17,10 @@ namespace HealthCareMVC.Controllers
         {
             _configuration = configuration;
         }
+        public IActionResult Patient_Home()
+        {
+            return View();
+        }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -32,6 +36,7 @@ namespace HealthCareMVC.Controllers
                     patients = await result.Content.ReadAsAsync<List<PatientViewModel>>();
                 }
             }
+
             return View(patients);
         }
         [HttpGet]
@@ -148,7 +153,7 @@ namespace HealthCareMVC.Controllers
             }
             return View(patient);
         }
-        [HttpPost("Patient/Delete/{PatientId}")]
+        [HttpPost]
         public async Task<IActionResult> Delete(PatientViewModel patient)
         {
 
