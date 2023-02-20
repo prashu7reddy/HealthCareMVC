@@ -26,7 +26,7 @@ namespace HealthCareMVC.Controllers
                 //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
 
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
-                var result = await client.GetAsync("Patients/GetAllPatients");
+                var result = await client.GetAsync("Patient/GetAllPatients");
                 if (result.IsSuccessStatusCode)
                 {
                     patients = await result.Content.ReadAsAsync<List<PatientViewModel>>();
@@ -43,7 +43,7 @@ namespace HealthCareMVC.Controllers
                 //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
 
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
-                var result = await client.GetAsync($"Patients/GetPatientById/{id}");
+                var result = await client.GetAsync($"Patient/GetPatientById/{id}");
                 if (result.IsSuccessStatusCode)
                 {
                     patient = await result.Content.ReadAsAsync<PatientViewModel>();
@@ -69,7 +69,7 @@ namespace HealthCareMVC.Controllers
                     //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
 
-                    var result = await client.PostAsJsonAsync("Patients/CreatePatient", patient);
+                    var result = await client.PostAsJsonAsync("Patient/CreatePatient", patient);
                     if (result.StatusCode == System.Net.HttpStatusCode.Created)
                     {
 
@@ -90,7 +90,7 @@ namespace HealthCareMVC.Controllers
                 {
                     //  client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
-                    var result = await client.GetAsync($"patients/GetPatientById/{id}");
+                    var result = await client.GetAsync($"patient/GetPatientById/{id}");
                     if (result.IsSuccessStatusCode)
                     {
                         patient = await result.Content.ReadAsAsync<PatientViewModel>();
@@ -113,7 +113,7 @@ namespace HealthCareMVC.Controllers
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
-                    var result = await client.PutAsJsonAsync($"Patients/UpdatePatient/{patient.Id}", patient);
+                    var result = await client.PutAsJsonAsync($"Patient/UpdatePatient/{patient.Id}", patient);
                     if (result.IsSuccessStatusCode)
                     {
                         return RedirectToAction("Index");
@@ -135,7 +135,7 @@ namespace HealthCareMVC.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
-                var result = await client.GetAsync($"Patients/GetPatientById/{id}");
+                var result = await client.GetAsync($"Patient/GetPatientById/{id}");
                 if (result.IsSuccessStatusCode)
                 {
                     patient = await result.Content.ReadAsAsync<PatientViewModel>();
@@ -148,14 +148,14 @@ namespace HealthCareMVC.Controllers
             }
             return View(patient);
         }
-        [HttpPost("Patienrs/Delete/{PatientId}")]
+        [HttpPost("Patient/Delete/{PatientId}")]
         public async Task<IActionResult> Delete(PatientViewModel patient)
         {
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
-                var result = await client.DeleteAsync($"Patients/DeletePatient/{patient.Id}");
+                var result = await client.DeleteAsync($"Patient/DeletePatient/{patient.Id}");
                 if (result.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");

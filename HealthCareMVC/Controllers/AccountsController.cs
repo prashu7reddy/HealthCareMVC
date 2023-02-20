@@ -44,17 +44,56 @@ namespace HealthCareMVC.Controllers
                         string token = await result.Content.ReadAsAsync<string>();
                         HttpContext.Session.SetString("token", token);
 
-                        string userName = login.Username;
-                        HttpContext.Session.SetString("Patient", userName);
+                        //string userName = login.Username;
+                        //HttpContext.Session.SetString("Patient", userName);
 
                         // TempData["UserName"] = login.Username;
+                        string role = await ExtractRole();
+                        if (role == "Doctor")
+                        {
 
-                        return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Doctor");
+                        }
+                        else if (role == "admin")
+                        {
+                            return RedirectToAction("Index", "Admin");
+                        }
+                        else if (role == "Patient")
+                        {
+                            return RedirectToAction("Index", "Patient");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                       
                     }
                     ModelState.AddModelError("", "Invalid Username or Password");
                 }
             }
             return View(login);
+        }
+        [NonAction]
+        public async Task<string> ExtractRole()
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                //  var result = await client.GetAsync("Accounts/GetName");                
+                var roleResult = await client.GetAsync("Accounts/GetRole");
+                if (roleResult.IsSuccessStatusCode)
+                {
+                    // var name = await result.Content.ReadAsAsync<string>();
+                    // ViewBag.Name = name;                    
+                    var role = await roleResult.Content.ReadAsAsync<string>();
+                    // ViewBag.Role = role; 
+                    return role;
+                }
+                return null;
+            }
         }
 
 

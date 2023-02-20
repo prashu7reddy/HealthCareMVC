@@ -23,7 +23,9 @@
                     </div>
                     <div class="mb-2">
                         <label asp-for="DocSpecializationId" class="form-label"></label>
-                        <input type="text" asp-for="DocSpecializationId" class="form-control" />
+                        <select asp-for="DocSpecializationId" asp-items="@(new SelectList(Model.Specializations,"Id","SpecializationName"))" class="form-select">
+                            <option>--Select--</option>
+                        </select>
                         <span asp-validation-for="DocSpecializationId"></span>
                     </div>
                     <div class="mb-2">

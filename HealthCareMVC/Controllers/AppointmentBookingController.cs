@@ -53,10 +53,14 @@ namespace HealthCareMVC.Controllers
         }
         [HttpGet]
         [Route("AppointmentBooking/Create")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-
-            return View();
+            AppointmentBookingViewModel viewModel = new AppointmentBookingViewModel
+            {
+                Specializations = await this.GetSpecializations()
+            };
+            return View(viewModel);
+          
         }
 
         [HttpPost("AppointmentBooking/Create")]
@@ -170,6 +174,20 @@ namespace HealthCareMVC.Controllers
             return View();
 
         }
-
+        [NonAction]
+        public async Task<List<DocSpecializationModel>> GetSpecializations()
+        {
+            List<DocSpecializationModel> specializations = new();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                var result = await client.GetAsync("Doctors/GetSpecializations");
+                if (result.IsSuccessStatusCode)
+                {
+                    specializations = await result.Content.ReadAsAsync<List<DocSpecializationModel>>();
+                }
+            }
+            return specializations;
+        }
     }
 }

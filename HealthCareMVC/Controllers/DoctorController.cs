@@ -23,7 +23,7 @@ namespace HealthCareMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            List<DoctorViewModel> doctors = new ();
+            List<DoctorViewModel> doctors = new();
             using (var client = new HttpClient())
             {
                 //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
@@ -35,13 +35,13 @@ namespace HealthCareMVC.Controllers
                     doctors = await result.Content.ReadAsAsync<List<DoctorViewModel>>();
                 }
             }
-                return View(doctors);
+            return View(doctors);
         }
         [HttpGet]
-        public async Task<IActionResult>Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             DoctorViewModel doctor = null;
-            using(var client = new HttpClient())
+            using (var client = new HttpClient())
             {
                 //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
 
@@ -56,10 +56,13 @@ namespace HealthCareMVC.Controllers
         }
         [HttpGet]
         [Route("Doctors/Create")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-
-            return View();
+            DoctorViewModel viewModel = new DoctorViewModel
+            {
+                Specializations = await this.GetSpecializations()
+            };
+            return View(viewModel);
         }
 
         [HttpPost("Doctors/Create")]
@@ -69,7 +72,7 @@ namespace HealthCareMVC.Controllers
             {
                 using (var client = new HttpClient())
                 {
-                   //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                    //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
 
                     var result = await client.PostAsJsonAsync("Doctors/CreateDoctor", doctor);
@@ -80,8 +83,12 @@ namespace HealthCareMVC.Controllers
                     }
                 }
             }
-
-            return View(doctor);
+            DoctorViewModel viewModel = new DoctorViewModel
+            {
+                Specializations = await this.GetSpecializations()
+            };
+            return View(viewModel);
+           
         }
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -91,12 +98,13 @@ namespace HealthCareMVC.Controllers
                 DoctorViewModel doctor = null;
                 using (var client = new HttpClient())
                 {
-                  //  client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                    //  client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
                     var result = await client.GetAsync($"doctors/GetDoctorById/{id}");
                     if (result.IsSuccessStatusCode)
                     {
                         doctor = await result.Content.ReadAsAsync<DoctorViewModel>();
+                        doctor.Specializations = await this.GetSpecializations();
                         return View(doctor);
                     }
                     else
@@ -109,7 +117,7 @@ namespace HealthCareMVC.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Edit( DoctorViewModel doctor)
+        public async Task<IActionResult> Edit(DoctorViewModel doctor)
         {
             if (ModelState.IsValid)
             {
@@ -128,7 +136,11 @@ namespace HealthCareMVC.Controllers
 
                 }
             }
-            return View();
+            DoctorViewModel viewModel = new DoctorViewModel
+            {
+                Specializations = await this.GetSpecializations()
+            };
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -152,8 +164,8 @@ namespace HealthCareMVC.Controllers
             }
             return View(doctor);
         }
-        
-       [HttpPost("Doctors/Delete/{DoctorId}")]
+
+        [HttpPost("Doctors/Delete/{DoctorId}")]
         public async Task<IActionResult> Delete(DoctorViewModel doctor)
         {
 
@@ -173,6 +185,21 @@ namespace HealthCareMVC.Controllers
             }
             return View();
 
+        }
+        [NonAction]
+        public async Task<List<DocSpecializationModel>> GetSpecializations()
+        {
+            List<DocSpecializationModel> specializations = new();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                var result = await client.GetAsync("Doctors/GetSpecializations");
+                if (result.IsSuccessStatusCode)
+                {
+                    specializations = await result.Content.ReadAsAsync<List<DocSpecializationModel>>();
+                }
+            }
+            return specializations;
         }
 
     }
