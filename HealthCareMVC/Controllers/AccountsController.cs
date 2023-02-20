@@ -21,7 +21,28 @@ namespace HealthCareMVC.Controllers
         {
             _configuration = configuration;
         }
-
+        [NonAction]
+        public async Task<string> ExtractRole()
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                //  var result = await client.GetAsync("Accounts/GetName");                
+                var roleResult = await client.GetAsync("Accounts/GetRole");
+                if (roleResult.IsSuccessStatusCode)
+                {
+                    // var name = await result.Content.ReadAsAsync<string>();
+                    // ViewBag.Name = name;                    
+                    var role = await roleResult.Content.ReadAsAsync<string>();
+                    // ViewBag.Role = role; 
+                    return role;
+                }
+                return null;
+            }
+        }
         [HttpGet]
         public IActionResult Login()
         {
@@ -49,18 +70,18 @@ namespace HealthCareMVC.Controllers
 
                         // TempData["UserName"] = login.Username;
                         string role = await ExtractRole();
-                        if (role == "Doctor")
+                        if (role == "Patient")
                         {
 
-                            return RedirectToAction("Index", "Doctor");
+                            return RedirectToAction("Index", "Patient");
                         }
                         else if (role == "admin")
                         {
                             return RedirectToAction("Index", "Admin");
                         }
-                        else if (role == "Patient")
+                        else if (role == "Doctor")
                         {
-                            return RedirectToAction("Index", "Patient");
+                            return RedirectToAction("Index", "Doctor");
                         }
                         else
                         {
@@ -73,28 +94,7 @@ namespace HealthCareMVC.Controllers
             }
             return View(login);
         }
-        [NonAction]
-        public async Task<string> ExtractRole()
-        {
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
-                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
-                //  var result = await client.GetAsync("Accounts/GetName");                
-                var roleResult = await client.GetAsync("Accounts/GetRole");
-                if (roleResult.IsSuccessStatusCode)
-                {
-                    // var name = await result.Content.ReadAsAsync<string>();
-                    // ViewBag.Name = name;                    
-                    var role = await roleResult.Content.ReadAsAsync<string>();
-                    // ViewBag.Role = role; 
-                    return role;
-                }
-                return null;
-            }
-        }
+      
 
 
 
@@ -105,7 +105,7 @@ namespace HealthCareMVC.Controllers
             {
                 Values = new List<SelectListItem>
                          {
-                             new SelectListItem { Value = "patient", Text = "patient" },
+                             new SelectListItem { Value = "Patient", Text = "Patient" },
                              new SelectListItem { Value = "Doctor", Text = "Doctor" }
                          }
 
@@ -163,7 +163,7 @@ namespace HealthCareMVC.Controllers
                 SignUpRoles = user1,
                 Values = new List<SelectListItem>
                          {
-                             new SelectListItem { Value = "patient", Text = "patient" },
+                             new SelectListItem { Value = "Patient", Text = "Patient" },
                              new SelectListItem { Value = "Doctor", Text = "Doctor" }
                          }
 
