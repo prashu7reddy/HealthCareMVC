@@ -204,6 +204,22 @@ namespace HealthCareMVC.Controllers
             }
             return specializations;
         }
+        [HttpGet]
+        public async Task<IActionResult> Appointment()
+        {
+            List<AppointmentBookingViewModel> appointments = new();
+            using (var client = new HttpClient())
+            {
+                //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
 
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                var result = await client.GetAsync("AppointmentBooking/GetAllBookings");
+                if (result.IsSuccessStatusCode)
+                {
+                    appointments = await result.Content.ReadAsAsync<List<AppointmentBookingViewModel>>();
+                }
+            }
+            return View(appointments);
+        }
     }
 }

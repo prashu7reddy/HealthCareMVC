@@ -1,16 +1,13 @@
 ﻿@model IEnumerable<AppointmentBookingViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Appointment";
 }
 
-
+<h1>Index</h1>
 
 
 <div class="class=row">
-    <h1>Appointments</h1>
-    <a asp-controller="AppointmentBooking" asp-action="create" class="btn btn-dark">Book Appointment</a>
-
     <div class="class=col-md-5">
         <table class="table table-hover">
             <thead>
@@ -25,7 +22,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td> @item.Date.ToShortDateString()</td>
+                        <td> @item.Date</td>
 
                         <td> @item.SpecializationName</td>
                         <td>
@@ -36,10 +33,9 @@
                 }
             </tbody>
         </table>
-        <a asp-controller="patient" asp-action="patient_home" class="btn btn-dark" >Back</a>
+        <a asp-controller="Doctor" asp-action="Doctor_home" class="btn btn-dark">Back</a>
 
     </div>
 </div>
 
 
- 

@@ -2,10 +2,43 @@
 @{
     ViewData["Title"] = "Patient_Home";
 }
+<body>
+    <div class="row offset-1">
 
-<h1>Patient_Home</h1>
-<a asp-controller="doctor" asp-action="index" class="btn btn-info">Doctors Details</a>
-<a asp-controller="AppointmentBooking" asp-action="Create" class="btn btn-info">Book Appointment </a>
+        <h1 class="offset-4 pt-5">Welcome 🙏</h1>
+        <div class="row">
+            <div class="col-md-5 pt-5 ">
+                <img src="https://qtxasset.com/2016-08/careteam_0.jpg?RkdaSLDeXXpSP2rhj1AZzMwKVa28dhAl" width="250" height="250" style="border-radius:10px" />
+                <div class="col"><a asp-controller="doctor" asp-action="index" class="btn btn-info" style="width:250px">Doctors Details</a></div>
+            </div>
+            <div class="col pt-3">
+                <br />
+                <br />
+                <h4 class="font-weight-bold text-bg-dark" style="color:blue">There are many types of doctors, but there are two main categories: <b>primary care or specialty care.</b> Within these two groups,doctors vary widely in their specialty area and level of training.</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 pt-5 ">
+                <img src="https://th.bing.com/th?id=OIP.iY7p1Du_hhjrPWioENC5ZAHaFj&w=288&h=216&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2" width="250" height="250" style="border-radius:10px" />
+                <a asp-controller="AppointmentBooking" asp-action="Create" class="btn btn-info" style="width:250px">Book Appointment </a>
+            </div>
+            <div class="col pt-3">
+                <br />
+                <br />
+                <h4 class="font-weight-bold text-bg-dark ">Save time spent on coordinating appointments over phone and email with an all-in-one appointment booking software. Accept online bookings 24x7, automate payments, business management, marketing, and more!</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 pt-5 ">
+                <img src="https://2.bp.blogspot.com/-R8VF5acyU1Y/VL9kv_fPd_I/AAAAAAAAD0I/e-RrAno2CSU/s1600/reschedule.jpg" width="250" height="250" style="border-radius:10px" />
+                <a asp-controller="AppointmentBooking" asp-action="index" class="btn btn-info " style="width:250px">Appointment History</a>
+            </div>
+            <div class="col pt-3">
+                <br />
+                <br />
+                <h4 class="font-weight-bold text-bg-dark ">Give customers the convenience to self schedule, cancel, reschedule and book recurring appointments using Appointy’s 24×7 online booking software. Send automated email and text reminders before appointments and reduce no-shows</h4>
+            </div>
 
-<a asp-controller="AppointmentBooking" asp-action="index" class="btn btn-info">Appointment History</a>
-
+        </div>
+    </div>
+</body>

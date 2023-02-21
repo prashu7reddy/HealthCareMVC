@@ -3,26 +3,29 @@
     ViewData["Title"] = "Delete";
 }
 
+<div class="col offset-2 pt-5 ">
+    <h1>Details</h1>
+    <div class="class=row">
+        <div class="class=col-md-5">
+            <ul class="list-group">
+                <li class="list-group-item"><b>Patient Name:</b>@Model.PatientName</li>
+                <li class="list-group-item"><b>Patient Age :</b>@Model.Age</li>
+                <li class="list-group-item"><b>Health Issue:</b>@Model.HealthIssue</li>
+                <li class="list-group-item"><b>Phone Number:</b>@Model.PatientName</li>
+                <li class="list-group-item"><b>Appointment Date:</b>@Model.Date.ToShortDateString()</li>
+                <li class="list-group-item"><b>Appointment Time:</b>@Model.Time.ToShortTimeString()</li>
+                <li class="list-group-item"><b>Doctor specialization:</b>@Model.SpecializationName</li>
+            </ul>
+            <div>
+                Are you sure Do you want to delete...?
+            </div>
+            <div>
+                <form asp-controller="AppointmentBooking" asp-action="Delete" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+            <a asp-controller="AppointmentBooking" asp-action="index">Go Back</a>
 
-
-
-<h1>Details</h1>
-<div class="class=row">
-    <div class="class=col-md-5">
-        <ul class="list-group">
-            <li class="list-group-item"><b>Appointment Date:</b>@Model.Date</li>
-            <li class="list-group-item"><b>Appointment Time:</b>@Model.Time</li>
-            <li class="list-group-item"><b>Doctor specialization:</b>@Model.DocSpecializationId</li>
-        </ul>
-        <div>
-            Are you sure Do you want to delete..?
         </div>
-        <div>
-            <form asp-controller="AppointmentBooking" asp-action="Delete" method="post">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </div>
-        <a asp-controller="AppointmentBooking" asp-action="index">Go Back</a>
-
     </div>
-</div>
+    </div>

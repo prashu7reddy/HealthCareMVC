@@ -75,7 +75,7 @@ namespace HealthCareMVC.Controllers
 
                             return RedirectToAction("Patient_Home", "Patient");
                         }
-                        else if (role == "admin")
+                        else if (role == "Admin")
                         {
                             return RedirectToAction("Index", "Admin");
                         }

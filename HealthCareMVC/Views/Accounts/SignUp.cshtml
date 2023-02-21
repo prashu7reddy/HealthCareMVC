@@ -5,12 +5,15 @@
 }
 
 <div class="container">
-    <h1 class="text-right col-11 offset-4">Create an Account</h1>
+    
     <div class="row">
-        <div class="col-md-12 offset-1">
+        <div class="col-md-12 ">
             <div class="row">
-
-                <div class="col-md-4 align-content-xl-end border border-dark shadow-lg rounded pl-5 pr-5 pb-3 offset-3">
+                <div class="col-md-5 pt-5 ">
+                    <img src="https://th.bing.com/th/id/R.f7207eed3196cf478919772facd66b7a?rik=3FImnidyjiSK9A&riu=http%3a%2f%2fwww.hfcgrupo.es%2fwp-content%2fuploads%2f2017%2f06%2fmedicos.png&ehk=nuE%2fj%2bATTN9ty6GX5BKv3tDjHPYV7GqzAHFIrL1fKec%3d&risl=&pid=ImgRaw&r=0" width="400" height="400" />
+                </div>
+                <div class="col-md-4 align-content-xl-end border border-dark shadow-lg rounded pl-5 pr-5 pb-3 pt-3 offset-2">
+                    <h1>Create an Account</h1>
                     <form asp-controller="Accounts" asp-action="SignUp" method="post" class="form-group">
 
                         <div class=" col mb-2 mt-2">
@@ -41,7 +44,7 @@
                             <span asp-validation-for="@Model.SignUpRoles.Password" class="text-danger"></span>
                         </div>
 
-                        <div class="col mb-2">
+                        <div class="col mb-1">
                             <label asp-for="@Model.SignUpRoles.ConfirmPassword" class="form-label"></label>
                             <input type="text" asp-for="@Model.SignUpRoles.ConfirmPassword" class="form-control" placeholder="Enter your  Confirm PassWord" />
 
@@ -49,12 +52,12 @@
                         </div>
 
 
-                        <div class="col mb-2">
+                        <div class="col mb-1">
                             <label asp-for="SelectedValue" class="form-group">Select Role</label>
                             <select name="selectedValue" asp-for="SelectedValue" asp-items="Model.Values" class="form-select"></select>
 
                         </div>
-                        <button type="submit" class="btn btn-outline-primary btn-block mb-4 text-center" style="width: 100%;">
+                        <button type="submit" class="btn btn-outline-primary btn-block mb-4 text-center pt-2" style="width: 100%;">
                             Register
                         </button>
 

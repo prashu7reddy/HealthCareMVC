@@ -159,6 +159,7 @@ namespace HealthCareMVC.Controllers
 
             using (var client = new HttpClient())
             {
+
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
                 var result = await client.DeleteAsync($"AppointmentBooking/DeleteAppointment/{appointment.Id}");
                 if (result.IsSuccessStatusCode)
@@ -168,7 +169,8 @@ namespace HealthCareMVC.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Server Error.Please try later");
+                    return RedirectToAction("Index");
+                    //ModelState.AddModelError("", "Server Error.Please try later");
                 }
             }
             return View();

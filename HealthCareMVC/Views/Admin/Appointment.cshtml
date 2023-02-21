@@ -1,16 +1,11 @@
 ﻿@model IEnumerable<AppointmentBookingViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Appointment";
 }
-
-
-
 
 <div class="class=row">
     <h1>Appointments</h1>
-    <a asp-controller="AppointmentBooking" asp-action="create" class="btn btn-dark">Book Appointment</a>
-
     <div class="class=col-md-5">
         <table class="table table-hover">
             <thead>
@@ -18,28 +13,26 @@
                     <th>Appointment Date</th>
                     <th>Specialization</th>
                     <th>Action</th>
-
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td> @item.Date.ToShortDateString()</td>
+                        <td typeof="date"> @item.Date</td>
 
                         <td> @item.SpecializationName</td>
                         <td>
                             <a asp-controller="AppointmentBooking" asp-action="Details" class="btn btn-dark" asp-route-id="@item.Id">Details</a>
-                            <a asp-controller="AppointmentBooking" asp-action="edit" class="btn btn-dark" asp-route-id="@item.Id">Update</a>
+                            <a asp-controller="AppointmentBooking" asp-action="Delete" class="btn btn-dark" asp-route-id="@item.Id">Delete</a>
+
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-        <a asp-controller="patient" asp-action="patient_home" class="btn btn-dark" >Back</a>
-
+        <a asp-controller="Admin" asp-action="index" class="btn btn-dark">Back</a>
     </div>
 </div>
 
 
- 

@@ -4,27 +4,28 @@
 }
 
 
+<div class="col offset-2 pt-5 ">
 
+    <h1>Details</h1>
+    <div class="class=row">
+        <div class="class=col-md-5">
+            <ul class="list-group">
+                <li class="list-group-item"><b>Doctor Name:</b>@Model.DoctorName</li>
+                <li class="list-group-item"><b>Doctor Specialization:</b>@Model.Specialization</li>
+                <li class="list-group-item"><b>EmailId:</b>@Model.EmailId</li>
+                <li class="list-group-item"><b>Phone Number:</b>@Model.PhoneNumber</li>
 
-<h1>Details</h1>
-<div class="class=row">
-    <div class="class=col-md-5">
-        <ul class="list-group">
-            <li class="list-group-item"><b>Doctor Name:</b>@Model.DoctorName</li>
-            <li class="list-group-item"><b>Doctor Specialization:</b>@Model.Specialization</li>
-            <li class="list-group-item"><b>EmailId:</b>@Model.EmailId</li>
-            <li class="list-group-item"><b>Phone Number:</b>@Model.PhoneNumber</li>
+            </ul>
+            <div>
+                Are you sure Do you want to delete..?
+            </div>
+            <div>
+                <form asp-controller="Doctor" asp-action="Delete" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+            <a asp-controller="Doctor" asp-action="index" class="btn btn-danger">Go Back</a>
 
-        </ul>
-        <div>
-            Are you sure Do you want to delete..?
         </div>
-        <div>
-            <form asp-controller="Doctor" asp-action="Delete" method="post">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-        </div>
-        <a asp-controller="Doctor" asp-action="index">Go Back</a>
-
     </div>
-</div>
+    </div>
