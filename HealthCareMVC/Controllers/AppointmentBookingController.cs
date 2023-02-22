@@ -99,6 +99,7 @@ namespace HealthCareMVC.Controllers
                     if (result.IsSuccessStatusCode)
                     {
                         appointment = await result.Content.ReadAsAsync<AppointmentBookingViewModel>();
+                        //appointment.Specializations = await this.GetSpecializations();
                         return View(appointment);
                     }
                     else

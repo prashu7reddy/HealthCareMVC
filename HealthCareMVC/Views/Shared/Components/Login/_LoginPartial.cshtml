@@ -5,8 +5,12 @@
 
 @if (isvalid != null)
 {
+<ul class="navbar-nav">
+    <li class="nav-item"><a asp-controller="Doctor" asp-action="index" class="nav-link">Doctors</a></li>
+    <li class="nav-item"><a asp-controller="Admin" asp-action="Appointment" class="nav-link">Appointments</a></li>
+</ul>
     <ul class="navbar-nav my-2 my-sm-0">
-       
+      
         <li class="nav-item">
             <a asp-controller="" asp-action="" class="nav-link">welcome,@ViewBag.Name</a>
         </li>
