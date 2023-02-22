@@ -54,5 +54,23 @@ namespace HealthCareMVC.Controllers
             }
             return View(appointments);
         }
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            DoctorViewModel doctor = null;
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                var result = await client.GetAsync($"Doctors/GetDoctorById/{id}");
+                if (result.IsSuccessStatusCode)
+                {
+                    doctor = await result.Content.ReadAsAsync<DoctorViewModel>();
+                }
+            }
+            return View(doctor);
+        }
+       
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HealthCareMVC.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -40,7 +41,7 @@ namespace HealthCareMVC.Controllers
             AppointmentBookingViewModel appointment = null;
             using (var client = new HttpClient())
             {
-                //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
 
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
                 var result = await client.GetAsync($"AppointmentBooking/GetAppointmentById/{id}");
@@ -70,7 +71,7 @@ namespace HealthCareMVC.Controllers
             {
                 using (var client = new HttpClient())
                 {
-                    //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
 
                     var result = await client.PostAsJsonAsync("AppointmentBooking/CreateAppointment", appointment);
@@ -92,7 +93,7 @@ namespace HealthCareMVC.Controllers
                 AppointmentBookingViewModel appointment = null;
                 using (var client = new HttpClient())
                 {
-                    //  client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
                     var result = await client.GetAsync($"AppointmentBooking/GetAppointmentById/{id}");
                     if (result.IsSuccessStatusCode)
@@ -173,7 +174,6 @@ namespace HealthCareMVC.Controllers
                     //ModelState.AddModelError("", "Server Error.Please try later");
                 }
             }
-            return View();
 
         }
         [NonAction]

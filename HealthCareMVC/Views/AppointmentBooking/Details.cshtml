@@ -12,8 +12,8 @@
                 <li class="list-group-item"><b>Patient Age :</b>@Model.Age</li>
                 <li class="list-group-item"><b>Health Issue:</b>@Model.HealthIssue</li>
                 <li class="list-group-item"><b>Phone Number:</b>@Model.PatientName</li>
-                <li class="list-group-item"><b>Appointment Date:</b>@Model.Date.ToShortDateString()</li>
-                <li class="list-group-item"><b>Appointment Time</b>@Model.Time.ToShortTimeString()</li>
+                <li class="list-group-item"><b>Appointment Date:</b>@Model.Date</li>
+                <li class="list-group-item"><b>Appointment Time</b>@Model.Time</li>
                 <li class="list-group-item"><b>Doctor Specialization:</b>@Model.SpecializationName</li>
             </ul>
             <a asp-controller="Doctor" asp-action="index" class="btn btn-danger">Go Back</a>

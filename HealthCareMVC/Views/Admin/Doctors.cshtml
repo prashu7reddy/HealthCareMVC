@@ -25,8 +25,9 @@
                         <td> @item.DoctorName</td>
                         <td> @item.Specialization</td>
                         <td>
-                            <a asp-controller="Doctor" asp-action="Details" class="btn btn-dark" asp-route-id="@item.Id">Details</a>
+                            <a asp-controller="Admin" asp-action="Details" class="btn btn-dark" asp-route-id="@item.Id">Details</a>
                             <a asp-controller="Doctor" asp-action="Edit" class="btn btn-dark" asp-route-id="@item.Id">Update</a>
+                            <a asp-controller="Doctor" asp-action="Delete" class="btn btn-dark" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>
                 }
