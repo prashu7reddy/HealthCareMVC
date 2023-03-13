@@ -1,9 +1,12 @@
-﻿@model AppointmentBookingViewModel
+﻿
+
+
+@model AppointmentBookingViewModel
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "AppointmentDetails";
 }
 <div class="col offset-2 pt-5 ">
-    <h1>Details</h1>
+    <h1>AppointmentDetails</h1>
     <div class="class=row">
         <div class="class=col-md-5">
             <ul class="list-group">
@@ -17,8 +20,8 @@
                 <li class="list-group-item"><b>Doctor Name</b>@Model.DoctorName</li>
                 <li class="list-group-item"><b>Doctor Specialization:</b>@Model.SpecializationName</li>
             </ul>
-            <a asp-controller="AppointmentBooking" asp-action="index" class="btn btn-danger">Go Back</a>
+            <a asp-controller="Admin" asp-action="Appointment" class="btn btn-danger">Go Back</a>
 
         </div>
     </div>
-    </div>
+</div>

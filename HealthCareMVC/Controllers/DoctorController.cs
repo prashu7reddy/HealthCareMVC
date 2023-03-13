@@ -130,7 +130,7 @@ namespace HealthCareMVC.Controllers
                     var result = await client.PutAsJsonAsync($"Doctors/UpdateDoctor/{doctor.Id}", doctor);
                     if (result.IsSuccessStatusCode)
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Doctors","Admin");
                     }
                     else
                     {
@@ -178,7 +178,7 @@ namespace HealthCareMVC.Controllers
                 var result = await client.DeleteAsync($"Doctors/DeleteDoctor/{doctor.Id}");
                 if (result.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Doctors","Admin");
 
                 }
                 else
@@ -207,13 +207,15 @@ namespace HealthCareMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Appointment()
         {
+            string userName = HttpContext.Session.GetString("DoctorName");
             List<AppointmentBookingViewModel> appointments = new();
             using (var client = new HttpClient())
             {
                 //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
 
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
-                var result = await client.GetAsync("AppointmentBooking/GetAllBookings");
+                // var result = await client.GetAsync("AppointmentBooking/GetAllBookings");
+                var result = await client.GetAsync($"AppointmentBooking/GetAllAppointmentsByDoctorName/{userName}");
                 if (result.IsSuccessStatusCode)
                 {
                     appointments = await result.Content.ReadAsAsync<List<AppointmentBookingViewModel>>();
@@ -221,5 +223,67 @@ namespace HealthCareMVC.Controllers
             }
             return View(appointments);
         }
+        [HttpGet]
+        public async Task<IActionResult> AppointmentDetails(int id)
+        {
+            AppointmentBookingViewModel appointment = null;
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                var result = await client.GetAsync($"AppointmentBooking/GetAppointmentById/{id}");
+                if (result.IsSuccessStatusCode)
+                {
+                    appointment = await result.Content.ReadAsAsync<AppointmentBookingViewModel>();
+                }
+            }
+            return View(appointment);
+        }
+        [HttpGet]
+
+        public async Task<IActionResult> AppointmentDelete(int id)
+        {
+            AppointmentBookingViewModel appointment = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                var result = await client.GetAsync($"AppointmentBooking/GetAppointmentById/{id}");
+                if (result.IsSuccessStatusCode)
+                {
+                    appointment = await result.Content.ReadAsAsync<AppointmentBookingViewModel>();
+                    return View(appointment);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Server Error.Please try later");
+                }
+            }
+            return View(appointment);
+        }
+        [HttpPost]
+        // [HttpPost("AppointmentBooking/Delete/{AppointmentBookingId}")]
+        public async Task<IActionResult> AppointmentDelete(AppointmentBookingViewModel appointment)
+        {
+
+            using (var client = new HttpClient())
+            {
+
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                var result = await client.DeleteAsync($"AppointmentBooking/DeleteAppointment/{appointment.Id}");
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Appointment","Doctor");
+
+                }
+                else
+                {
+                    return RedirectToAction("Appointment","Doctor");
+                    //ModelState.AddModelError("", "Server Error.Please try later");
+                }
+            }
+
+        }
+
     }
 }

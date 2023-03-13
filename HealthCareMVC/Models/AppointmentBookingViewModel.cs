@@ -22,7 +22,7 @@ namespace HealthCareMVC.Models
     
 
         public DateTime Time { get; set; }
-
+        public string DoctorName { get; set; }
        // public DocSpecialization Specialization { get; set; }
        [Display(Name ="Specialization")]
         public int DocSpecializationId { get; set; }

@@ -13,7 +13,7 @@
             <thead>
                 <tr>
                     <th>Appointment Date</th>
-                    <th>Specialization</th>
+                    <th>Patient</th>
                     <th>Action</th>
 
                 </tr>
@@ -24,10 +24,10 @@
                     <tr>
                         <td> @item.Date</td>
 
-                        <td> @item.SpecializationName</td>
+                        <td> @item.PatientName</td>
                         <td>
-                            <a asp-controller="AppointmentBooking" asp-action="Details" class="btn btn-dark" asp-route-id="@item.Id">Details</a>
-                            <a asp-controller="AppointmentBooking" asp-action="edit" class="btn btn-dark" asp-route-id="@item.Id">Update</a>
+                            <a asp-controller="Doctor" asp-action="AppointmentDetails" class="btn btn-dark" asp-route-id="@item.Id">Details</a>
+                            <a asp-controller="Doctor" asp-action="AppointmentDelete" class="btn btn-dark" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>
                 }

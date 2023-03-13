@@ -21,13 +21,15 @@ namespace HealthCareMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            string userName = HttpContext.Session.GetString("PatientName");
             List<AppointmentBookingViewModel> appointments = new();
             using (var client = new HttpClient())
             {
                 //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
 
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
-                var result = await client.GetAsync("AppointmentBooking/GetAllBookings");
+                //var result = await client.GetAsync("AppointmentBooking/GetAllBookings");
+                var result = await client.GetAsync($"AppointmentBooking/GetAllAppointmentsByPatientName/{userName}");
                 if (result.IsSuccessStatusCode)
                 {
                     appointments = await result.Content.ReadAsAsync<List<AppointmentBookingViewModel>>();
@@ -90,7 +92,12 @@ namespace HealthCareMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppointmentBookingViewModel appointment = null;
+               // AppointmentBookingViewModel appointment = null;
+                AppointmentBookingViewModel appointment = new AppointmentBookingViewModel
+                {
+                    Specializations = await this.GetSpecializations()
+                };
+               
                 using (var client = new HttpClient())
                 {
                      client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
@@ -98,7 +105,7 @@ namespace HealthCareMVC.Controllers
                     var result = await client.GetAsync($"AppointmentBooking/GetAppointmentById/{id}");
                     if (result.IsSuccessStatusCode)
                     {
-                        appointment = await result.Content.ReadAsAsync<AppointmentBookingViewModel>();
+                       appointment = await result.Content.ReadAsAsync<AppointmentBookingViewModel>();
                         //appointment.Specializations = await this.GetSpecializations();
                         return View(appointment);
                     }
@@ -108,6 +115,7 @@ namespace HealthCareMVC.Controllers
                     }
 
                 }
+               
             }
             return View();
         }

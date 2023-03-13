@@ -16,24 +16,23 @@
             <thead>
                 <tr>
                     <th>Appointment Date</th>
-                    <th>Specialization</th>
+                    <th>Doctor Name</th>
                     <th>Action</th>
-
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td> @item.Date.ToShortDateString()</td>
+                <tr>
+                    <td> @item.Date.ToShortDateString()</td>
 
-                        <td> @item.SpecializationName</td>
-                        <td>
-                            <a asp-controller="AppointmentBooking" asp-action="Details" class="btn btn-dark" asp-route-id="@item.Id">Details</a>
-                            <a asp-controller="AppointmentBooking" asp-action="edit" class="btn btn-dark" asp-route-id="@item.Id">Update</a>
-                            <a asp-controller="AppointmentBooking" asp-action="delete" class="btn btn-dark" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
+                    <td> @item.DoctorName</td>
+                    <td>
+                        <a asp-controller="AppointmentBooking" asp-action="Details" class="btn btn-dark" asp-route-id="@item.Id">Details</a>
+                        <a asp-controller="AppointmentBooking" asp-action="edit" class="btn btn-dark" asp-route-id="@item.Id">Update</a>
+                        <a asp-controller="AppointmentBooking" asp-action="delete" class="btn btn-dark" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

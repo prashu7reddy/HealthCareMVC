@@ -12,6 +12,7 @@ namespace HealthCareMVC.Models
        // [Required]
 
         public string DoctorName { get; set; }
+        [Display(Name ="Specialization")]
         public int DocSpecializationId { get; set; }
         // public DocSpecializationModel Specialization { get; set; }
        // [Required]

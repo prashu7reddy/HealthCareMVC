@@ -42,13 +42,17 @@
                     <span asp-validation-for="Time"></span>
                 </div>
                 <div class="mb-2">
+                    <label asp-for="DoctorName" class="form-label"></label>
+                    <input type="text" asp-for="DoctorName" class="form-control" />
+                    <span asp-validation-for="DoctorName"></span>
+                </div>
+                <div class="mb-2">
                     <label asp-for="DocSpecializationId" class="form-label"></label>
                     <select asp-for="DocSpecializationId" asp-items="@(new SelectList(Model.Specializations,"Id","SpecializationName"))" class="form-select">
                         <option>--Select--</option>
                     </select>
                     <span asp-validation-for="DocSpecializationId"></span>
                 </div>
-
                 <div class="mt-2 d-grid">
                     <input type="submit" class="btn btn-primary" value="Add New" />
                 </div>

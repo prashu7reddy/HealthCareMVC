@@ -59,14 +59,21 @@ namespace HealthCareMVC.Controllers
                     client.DefaultRequestHeaders.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                     client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
-                    var result = await client.PostAsJsonAsync("Accounts/Login", login);
+                    var result = await client.PostAsJsonAsync("Accounts/PatientLogin", login);
                     if (result.IsSuccessStatusCode)
                     {
                         string token = await result.Content.ReadAsAsync<string>();
                         HttpContext.Session.SetString("token", token);
 
-                        //string userName = login.Username;
-                        //HttpContext.Session.SetString("Patient", userName);
+                        string Role = await ExtractRole();
+                        HttpContext.Session.SetString("role", Role);
+
+                        string userName = login.Username;
+                        HttpContext.Session.SetString("PatientName", userName);
+
+                        string DoctorName = login.Username;
+                        HttpContext.Session.SetString("DoctorName", DoctorName);
+
 
                         // TempData["UserName"] = login.Username;
                         string role = await ExtractRole();
@@ -75,28 +82,131 @@ namespace HealthCareMVC.Controllers
 
                             return RedirectToAction("Patient_Home", "Patient");
                         }
-                        else if (role == "Admin")
+
+                        else
+                        {
+                            //return RedirectToAction("Index", "Home")
+                            return RedirectToAction("LoginError", "Accounts");
+                        }
+
+                    }
+                    return RedirectToAction("LoginError", "Accounts");
+                }
+            }
+            return View(login);
+        }
+
+        ///////////////////////////////////////////////////////
+        [HttpGet]
+        public IActionResult AdminLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AdminLogin(LoginViewModel login)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                    client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                    var result = await client.PostAsJsonAsync("Accounts/AdminLogin", login);
+                    if (result.IsSuccessStatusCode)
+                    {
+                        string token = await result.Content.ReadAsAsync<string>();
+                        HttpContext.Session.SetString("token", token);
+
+                        string Role = await ExtractRole();
+                        HttpContext.Session.SetString("role", Role);
+
+                        string userName = login.Username;
+                        HttpContext.Session.SetString("PatientName", userName);
+
+                        string DoctorName = login.Username;
+                        HttpContext.Session.SetString("DoctorName", DoctorName);
+
+
+                        // TempData["UserName"] = login.Username;
+                        string role = await ExtractRole();
+                        if (role == "Admin")
                         {
                             return RedirectToAction("Index", "Admin");
                         }
-                        else if (role == "Doctor")
+                        else 
+                        {
+                            //return RedirectToAction("Index", "Home")
+                            return RedirectToAction("LoginError", "Accounts");
+                        }
+
+                    }
+                    return RedirectToAction("LoginError", "Accounts");
+                }
+            }
+            return View(login);
+        }
+
+
+        ///////////////////////////////////////////////////////
+        [HttpGet]
+        public IActionResult DoctorLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DoctorLogin(LoginViewModel login)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                    client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                    var result = await client.PostAsJsonAsync("Accounts/DoctorLogin", login);
+                    if (result.IsSuccessStatusCode)
+                    {
+                        string token = await result.Content.ReadAsAsync<string>();
+                        HttpContext.Session.SetString("token", token);
+
+                        string Role = await ExtractRole();
+                        HttpContext.Session.SetString("role", Role);
+
+                        string userName = login.Username;
+                        HttpContext.Session.SetString("PatientName", userName);
+
+                        string DoctorName = login.Username;
+                        HttpContext.Session.SetString("DoctorName", DoctorName);
+
+
+                        // TempData["UserName"] = login.Username;
+                        string role = await ExtractRole();
+                        if (role == "Doctor")
                         {
                             return RedirectToAction("Doctor_Home", "Doctor");
                         }
                         else
                         {
-                            return RedirectToAction("Index", "Home");
+                            //return RedirectToAction("Index", "Home")
+                            return RedirectToAction("LoginError", "Accounts");
                         }
-                       
+
                     }
-                    ModelState.AddModelError("", "Invalid Username or Password");
+                    return RedirectToAction("LoginError", "Accounts");
                 }
             }
             return View(login);
         }
-      
 
 
+        /////////////////////////////////////////////////////
+        public IActionResult LoginError()
+        {
+            return View();
+        }
 
         [HttpGet]
         public IActionResult SignUp()

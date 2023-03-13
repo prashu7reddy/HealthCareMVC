@@ -1,6 +1,6 @@
 ﻿@model AppointmentBookingViewModel
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "AppointmentDelete";
 }
 
 <div class="col offset-2 pt-5 ">
@@ -21,12 +21,12 @@
                 Are you sure Do you want to delete...?
             </div>
             <div>
-                <form asp-controller="AppointmentBooking" asp-action="Delete" method="post">
+                <form asp-controller="Doctor" asp-action="AppointmentDelete" method="post">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </div>
-            <a asp-controller="AppointmentBooking" asp-action="index">Go Back</a>
+            <a asp-controller="Doctor" asp-action="Appointment">Go Back</a>
 
         </div>
     </div>
-    </div>
+</div>
